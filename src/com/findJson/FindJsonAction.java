@@ -1,13 +1,12 @@
-package com.pluginTests;
+package com.findJson;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.ui.DialogBuilder;
 
-public class TestAction extends AnAction {
+public class FindJsonAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        TestDialog.getInstance().show();
+        FindJsonDialog.getInstance().show();
     }
 }

@@ -1,4 +1,4 @@
-package com.pluginTests;
+package com.findJson;
 
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -9,14 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class TestDialog extends DialogWrapper {
-    static private TestDialog instance;
+class FindJsonDialog extends DialogWrapper {
+    static private FindJsonDialog instance;
 
-    static public TestDialog getInstance() {
-        if (TestDialog.instance == null) {
-            TestDialog.instance = new TestDialog();
+    static public FindJsonDialog getInstance() {
+        if (FindJsonDialog.instance == null) {
+            FindJsonDialog.instance = new FindJsonDialog();
         }
-        return TestDialog.instance;
+        return FindJsonDialog.instance;
     }
 
     private Window window;
@@ -29,7 +29,7 @@ class TestDialog extends DialogWrapper {
     private JLabel foundFilePath;
     private JTextArea foundFileBody;
 
-    private TestDialog() {
+    private FindJsonDialog() {
         super(true);
 
         // Window Config
