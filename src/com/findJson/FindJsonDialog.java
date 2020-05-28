@@ -39,7 +39,6 @@ class FindJsonDialog extends DialogWrapper {
         // Window Config
         this.setTitle("Find In Json");
         this.setModal(false);
-        this.setUndecorated(true);
 
         window = this.getWindow();
         window.addWindowListener(new WindowAdapter() {
@@ -59,7 +58,9 @@ class FindJsonDialog extends DialogWrapper {
         mainPanel.setPreferredSize(new Dimension(610, 660));
         mainPanel.setMinimumSize(new Dimension(425, 325));
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(0,5,5,5));
+        JPanel topLinePanel = new JPanel();
+        setComponentSize(topLinePanel, 20, 20, 20);
 
         // titlePanel
         titlePanel = new JPanel();
@@ -81,7 +82,6 @@ class FindJsonDialog extends DialogWrapper {
 
         titlePanel.add(titleLabel);
         titlePanel.add(Box.createHorizontalGlue());
-        titlePanel.add(new JTextField());
         titlePanel.add(matchCaseBox);
         titlePanel.add(fromHeadBox);
 
@@ -106,6 +106,7 @@ class FindJsonDialog extends DialogWrapper {
         // foundFileBody
         foundFileBody = new JTextArea();
 
+        mainPanel.add(topLinePanel);
         mainPanel.add(titlePanel);
         mainPanel.add(findBox);
         mainPanel.add(findInFolderPanel);
@@ -136,6 +137,6 @@ class FindJsonDialog extends DialogWrapper {
 
     @Override
     public void show() {
-        super.show();
+        window.setVisible(true);
     }
 }
