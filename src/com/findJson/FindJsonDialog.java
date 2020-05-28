@@ -2,6 +2,7 @@ package com.findJson;
 
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.ui.SearchTextField;
 import com.intellij.ui.table.JBTable;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +24,7 @@ class FindJsonDialog extends DialogWrapper {
     private JPanel mainPanel;
 
     private JPanel titlePanel;
-    private ComboBox<String> findBox;
+    private SearchTextField findBox;
     private JPanel findInFolderPanel;
     private JBTable foundFilesList;
     private JLabel foundFilePath;
@@ -40,18 +41,18 @@ class FindJsonDialog extends DialogWrapper {
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                window.setVisible(false);
+                //window.setVisible(false);
             }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-                window.setVisible(false);
+                //window.setVisible(false);
             }
         });
 
         // mainPanel
         mainPanel = new JPanel();
-        mainPanel.setPreferredSize(new Dimension(610, 640));
+        mainPanel.setPreferredSize(new Dimension(610, 660));
         mainPanel.setMinimumSize(new Dimension(425, 325));
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
@@ -59,21 +60,23 @@ class FindJsonDialog extends DialogWrapper {
         titlePanel = new JPanel();
         setComponentSize(titlePanel, 40, 40, 40);
 
+        // TODO findBox inner panel
         // findBox
-        findBox = new ComboBox<String>();
+        findBox = new SearchTextField();
         setComponentSize(findBox, 30, 30, 30);
 
         // findInFolderPanel
         findInFolderPanel = new JPanel();
-        setComponentSize(findInFolderPanel, 0, 40, 0);
+        setComponentSize(findInFolderPanel, 40, 40, 40);
 
         // foundFilesList
         foundFilesList = new JBTable();
-        setComponentSize(foundFilesList, 0, 200, 0);
+        setComponentSize(foundFilesList, 170, 170, 0);
+        // line height 20px
 
         // foundFilePath
         foundFilePath = new JLabel();
-        setComponentSize(titlePanel, 40, 40, 40);
+        setComponentSize(titlePanel, 30, 30, 30);
 
         // foundFileBody
         foundFileBody = new JTextArea();
