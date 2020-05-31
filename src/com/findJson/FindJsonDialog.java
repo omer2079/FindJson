@@ -1,14 +1,18 @@
 package com.findJson;
 
+import com.findJson.utils.Test;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.SearchTextField;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.table.JBTable;
 import org.jetbrains.annotations.Nullable;
+import com.findJson.utils.Module;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
 
 class FindJsonDialog extends DialogWrapper {
     static private FindJsonDialog instance;
@@ -27,8 +31,13 @@ class FindJsonDialog extends DialogWrapper {
     private JLabel titleLabel;
     private JCheckBox matchCaseBox;
     private JCheckBox fromHeadBox;
+    private JCheckBox includeUnloadBox;
     private SearchTextField findBox;
     private JPanel findInFolderPanel;
+    private JButton findInProjectButton;
+    private JButton findInModuleButton;
+    private JButton findInFolderButton;
+    private JComboBox<Module> findInModuleBox;
     private JBTable foundFilesList;
     private JLabel foundFilePath;
     private JTextArea foundFileBody;
@@ -41,22 +50,26 @@ class FindJsonDialog extends DialogWrapper {
         this.setModal(false);
 
         window = this.getWindow();
+        window.setPreferredSize(new Dimension(620, 660));
         window.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                window.setVisible(false);
+            @Override public void windowClosing(WindowEvent e) {
+                //window.setVisible(false);
             }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-                window.setVisible(false);
+                //window.setVisible(false);
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                // TODO update findInProject and findInModule
             }
         });
 
         // mainPanel
         mainPanel = new JPanel();
-        mainPanel.setPreferredSize(new Dimension(610, 660));
-        mainPanel.setMinimumSize(new Dimension(425, 325));
+        mainPanel.setMinimumSize(new Dimension(545, 400));
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(0,5,5,5));
         JPanel topLinePanel = new JPanel();
@@ -71,6 +84,7 @@ class FindJsonDialog extends DialogWrapper {
         titleLabel = new JLabel();
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0,0));
         titleLabel.setText(this.getTitle());
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
 
         // matchCaseBox
         matchCaseBox = new JBCheckBox("Match Case", true);
@@ -80,10 +94,15 @@ class FindJsonDialog extends DialogWrapper {
         fromHeadBox = new JBCheckBox("From Head", true);
         fromHeadBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0,10));
 
+        // includeUnloadBox
+        includeUnloadBox = new JBCheckBox("Include Unload");
+        includeUnloadBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0,10));
+
         titlePanel.add(titleLabel);
         titlePanel.add(Box.createHorizontalGlue());
         titlePanel.add(matchCaseBox);
         titlePanel.add(fromHeadBox);
+        titlePanel.add(includeUnloadBox);
 
         // findBox
         findBox = new SearchTextField();
@@ -94,7 +113,32 @@ class FindJsonDialog extends DialogWrapper {
         setComponentSize(findInFolderPanel, 40, 40, 40);
         findInFolderPanel.setLayout(new BoxLayout(findInFolderPanel, BoxLayout.X_AXIS));
 
-        //
+        // findInProjectButton
+        findInProjectButton = new JButton();
+        findInProjectButton.setSize(40, 20);
+        findInProjectButton.setText("Project");
+        findInProjectButton.setFont(findInProjectButton.getFont().deriveFont(Font.BOLD));
+
+        // findInModuleButton
+        findInModuleButton = new JButton();
+        findInModuleButton.setSize(40, 20);
+        findInModuleButton.setText("Module");
+
+        // findInFolderButton
+        findInFolderButton = new JButton();
+        findInFolderButton.setSize(40, 20);
+        findInFolderButton.setText("Folder");
+
+        // findInModuleBox
+        findInModuleBox = new ComboBox();
+        findInModuleBox.addItem(Test.getModule());
+        findInModuleBox.setPreferredSize(new Dimension(300, 30));
+        findInModuleBox.setMaximumSize(new Dimension(300, 30));
+
+        findInFolderPanel.add(findInProjectButton);
+        findInFolderPanel.add(findInModuleButton);
+        findInFolderPanel.add(findInFolderButton);
+        findInFolderPanel.add(findInModuleBox);
 
         // foundFilesList
         foundFilesList = new JBTable();
@@ -116,7 +160,7 @@ class FindJsonDialog extends DialogWrapper {
         mainPanel.add(foundFilePath);
         mainPanel.add(foundFileBody);
 
-        this.getContentPane().add(mainPanel);
+        this.getContentPanel().add(mainPanel);
     }
 
     private void setComponentSize(Component component, int min, int height, int max) {
