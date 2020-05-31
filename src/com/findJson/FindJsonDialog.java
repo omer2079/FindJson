@@ -85,7 +85,6 @@ class FindJsonDialog extends DialogWrapper {
         titlePanel.add(matchCaseBox);
         titlePanel.add(fromHeadBox);
 
-        // TODO findBox inner panel
         // findBox
         findBox = new SearchTextField();
         setComponentSize(findBox, 30, 30, 30);
@@ -93,6 +92,9 @@ class FindJsonDialog extends DialogWrapper {
         // findInFolderPanel
         findInFolderPanel = new JPanel();
         setComponentSize(findInFolderPanel, 40, 40, 40);
+        findInFolderPanel.setLayout(new BoxLayout(findInFolderPanel, BoxLayout.X_AXIS));
+
+        //
 
         // foundFilesList
         foundFilesList = new JBTable();
