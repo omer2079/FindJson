@@ -1,13 +1,18 @@
 package com.findJson;
 
-import com.findJson.utils.Test;
+import com.intellij.json.JsonFileType;
+import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.ui.EditorTextField;
 import com.intellij.ui.SearchTextField;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.table.JBTable;
 import org.jetbrains.annotations.Nullable;
 import com.findJson.utils.Module;
+import com.findJson.utils.IDE;
+import com.findJson.utils.Test;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +48,7 @@ class FindJsonDialog extends DialogWrapper {
     private JPanel foundFilePathPanel;
     private JLabel foundFilePath;
     private JPanel foundFileBodyPanel;
-    private JTextArea foundFileBody;
+    private EditorTextField foundFileBody;
 
     private FindJsonDialog() {
         super(true);
@@ -182,7 +187,9 @@ class FindJsonDialog extends DialogWrapper {
         foundFileBodyPanel.setLayout(new BoxLayout(foundFileBodyPanel, BoxLayout.X_AXIS));
 
         // foundFileBody
-        foundFileBody = new JTextArea();
+        foundFileBody = new EditorTextField(EditorFactory.getInstance().createDocument(""),
+                IDE.getProject(), JsonFileType.INSTANCE);
+        foundFileBody.setOneLineMode(false);
 
         foundFileBodyPanel.add(foundFileBody);
 
@@ -193,6 +200,7 @@ class FindJsonDialog extends DialogWrapper {
         mainPanel.add(foundFilesList);
         mainPanel.add(foundFilePathPanel);
         mainPanel.add(foundFileBodyPanel);
+
 
         this.getContentPanel().add(mainPanel);
     }
