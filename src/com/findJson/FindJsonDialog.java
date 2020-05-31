@@ -44,6 +44,9 @@ class FindJsonDialog extends DialogWrapper {
     private JComboBox<Module> findInModuleBox;
     private JComboBox<String> findInFolderBox;
     private JButton findInFolderSelectButton;
+    private JPanel nothingToShowPanel;
+    private JLabel nothingToShowLabel;
+    private JPanel foundPanel;
     private JBTable foundFilesList;
     private JPanel foundFilePathPanel;
     private JLabel foundFilePath;
@@ -164,6 +167,21 @@ class FindJsonDialog extends DialogWrapper {
         findInFolderPanel.add(findInFolderBox);
         findInFolderPanel.add(findInFolderSelectButton);
 
+        // nothingToShowPanel
+        nothingToShowPanel = new JPanel();
+        nothingToShowPanel.setLayout(new GridBagLayout());
+
+        // nothingToShowLabel
+        nothingToShowLabel = new JLabel();
+        nothingToShowLabel.setText("Nothing To Show");
+
+        nothingToShowPanel.add(nothingToShowLabel);
+
+        // foundPanel
+        foundPanel = new JPanel();
+        foundPanel.setLayout(new BoxLayout(foundPanel, BoxLayout.Y_AXIS));
+        foundPanel.setVisible(false);
+
         // foundFilesList
         foundFilesList = new JBTable();
         setComponentSize(foundFilesList, 170, 170, 0);
@@ -193,13 +211,16 @@ class FindJsonDialog extends DialogWrapper {
 
         foundFileBodyPanel.add(foundFileBody);
 
+        foundPanel.add(foundFilesList);
+        foundPanel.add(foundFilePathPanel);
+        foundPanel.add(foundFileBodyPanel);
+
         mainPanel.add(topLinePanel);
         mainPanel.add(titlePanel);
         mainPanel.add(findBox);
         mainPanel.add(findInFolderPanel);
-        mainPanel.add(foundFilesList);
-        mainPanel.add(foundFilePathPanel);
-        mainPanel.add(foundFileBodyPanel);
+        mainPanel.add(nothingToShowPanel);
+        mainPanel.add(foundPanel);
 
 
         this.getContentPanel().add(mainPanel);
