@@ -12,7 +12,6 @@ import com.findJson.utils.Module;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeListener;
 
 class FindJsonDialog extends DialogWrapper {
     static private FindJsonDialog instance;
@@ -38,6 +37,8 @@ class FindJsonDialog extends DialogWrapper {
     private JButton findInModuleButton;
     private JButton findInFolderButton;
     private JComboBox<Module> findInModuleBox;
+    private JComboBox<String> findInFolderBox;
+    private JButton findInFolderSelectButton;
     private JBTable foundFilesList;
     private JLabel foundFilePath;
     private JTextArea foundFileBody;
@@ -134,11 +135,27 @@ class FindJsonDialog extends DialogWrapper {
         findInModuleBox.addItem(Test.getModule());
         findInModuleBox.setPreferredSize(new Dimension(300, 30));
         findInModuleBox.setMaximumSize(new Dimension(300, 30));
+        findInModuleBox.setVisible(false);
+
+        // findInFolderBox
+        findInFolderBox = new ComboBox();
+        findInFolderBox.setMinimumSize(new Dimension(1, 30));
+        findInFolderBox.setPreferredSize(new Dimension(1, 30));
+        findInFolderBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        findInFolderBox.setEditable(true);
+        findInFolderBox.setVisible(false);
+
+        // findInFolderSelectButton
+        findInFolderSelectButton = new JButton();
+        findInFolderSelectButton.setText("Select");
+        findInFolderSelectButton.setVisible(false);
 
         findInFolderPanel.add(findInProjectButton);
         findInFolderPanel.add(findInModuleButton);
         findInFolderPanel.add(findInFolderButton);
         findInFolderPanel.add(findInModuleBox);
+        findInFolderPanel.add(findInFolderBox);
+        findInFolderPanel.add(findInFolderSelectButton);
 
         // foundFilesList
         foundFilesList = new JBTable();
